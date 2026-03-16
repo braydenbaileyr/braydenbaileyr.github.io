@@ -1,21 +1,31 @@
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 const EducationSection = () => {
+  const reduceMotion = useReducedMotion();
+
   return (
-    <section className="py-16 max-w-3xl mx-auto px-6">
+    <section id="education" className="py-16 max-w-3xl mx-auto px-6">
       <motion.h2
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
+        {...(reduceMotion
+          ? {}
+          : {
+              initial: { opacity: 0 },
+              whileInView: { opacity: 1 },
+              viewport: { once: true },
+            })}
         className="text-sm uppercase tracking-widest text-muted-foreground mb-10"
       >
         Education
       </motion.h2>
       <motion.div
-        initial={{ opacity: 0, y: 8 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+        {...(reduceMotion
+          ? {}
+          : {
+              initial: { opacity: 0, y: 8 },
+              whileInView: { opacity: 1, y: 0 },
+              viewport: { once: true },
+              transition: { duration: 0.4, ease: [0.25, 0.1, 0.25, 1] },
+            })}
         className="grid grid-cols-1 md:grid-cols-[30%_1fr] gap-4"
       >
         <div>

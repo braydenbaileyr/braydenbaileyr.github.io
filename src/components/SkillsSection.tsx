@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 const skillGroups = [
   { label: "Languages", items: ["C#", "TypeScript", "JavaScript", "Python", "C++", "SQL"] },
@@ -7,12 +7,18 @@ const skillGroups = [
 ];
 
 const SkillsSection = () => {
+  const reduceMotion = useReducedMotion();
+
   return (
-    <section className="py-16 max-w-3xl mx-auto px-6">
+    <section id="skills" className="py-16 max-w-3xl mx-auto px-6">
       <motion.h2
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
+        {...(reduceMotion
+          ? {}
+          : {
+              initial: { opacity: 0 },
+              whileInView: { opacity: 1 },
+              viewport: { once: true },
+            })}
         className="text-sm uppercase tracking-widest text-muted-foreground mb-10"
       >
         Skills
@@ -21,10 +27,14 @@ const SkillsSection = () => {
         {skillGroups.map((group, i) => (
           <motion.div
             key={group.label}
-            initial={{ opacity: 0, y: 8 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: i * 0.05, ease: [0.25, 0.1, 0.25, 1] }}
+            {...(reduceMotion
+              ? {}
+              : {
+                  initial: { opacity: 0, y: 8 },
+                  whileInView: { opacity: 1, y: 0 },
+                  viewport: { once: true },
+                  transition: { duration: 0.4, delay: i * 0.05, ease: [0.25, 0.1, 0.25, 1] },
+                })}
           >
             <p className="text-xs font-medium text-muted-foreground mb-2">{group.label}</p>
             <div className="flex flex-wrap gap-2">

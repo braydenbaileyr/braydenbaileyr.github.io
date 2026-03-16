@@ -17,9 +17,9 @@ const Index = () => {
         <EducationSection />
         <div className="mx-6 h-px bg-border" />
         <SkillsSection />
-        <footer className="py-12 px-6 text-center">
+        <footer className="max-w-3xl mx-auto px-6 py-12 text-center">
           <p className="text-xs text-muted-foreground">
-            © 2026 Brayden Bailey · Built with precision
+            © 2026 Brayden Bailey
           </p>
         </footer>
       </div>

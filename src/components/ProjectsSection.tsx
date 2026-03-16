@@ -1,12 +1,12 @@
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 const projects = [
   {
     title: "Formula SAE Driver Display System",
     role: "Backend Engineer",
-    dates: "Jan 2026 – Present",
+    dates: "Jan 2026 - Present",
     description: "Real-time telemetry streaming and remote configuration for a race car driver display, built on TypeScript with WebSocket communication to Raspberry Pi.",
-    tags: ["TypeScript", "WebSocket", "REST API", "Raspberry Pi"],
+    tags: ["TypeScript", "REST API", "Cloud Deployment", "WebSocket", "Raspberry Pi"],
     bullets: [
       "Architected backend service enabling real-time telemetry streaming and remote configuration updates",
       "Developed REST APIs for managing screen layouts, display widgets, and CAN signal mappings",
@@ -16,7 +16,7 @@ const projects = [
   {
     title: "Revello",
     role: "Co-Founder / Developer",
-    dates: "Jul 2024",
+    dates: "July 2024",
     description: "Local deal discovery app serving 2,000+ users in under 6 months, built with JavaScript and Firebase.",
     tags: ["JavaScript", "Firebase", "Firestore", "Auth"],
     bullets: [
@@ -28,12 +28,18 @@ const projects = [
 ];
 
 const ProjectsSection = () => {
+  const reduceMotion = useReducedMotion();
+
   return (
-    <section className="py-16 max-w-3xl mx-auto px-6">
+    <section id="projects" className="py-16 max-w-3xl mx-auto px-6">
       <motion.h2
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
+        {...(reduceMotion
+          ? {}
+          : {
+              initial: { opacity: 0 },
+              whileInView: { opacity: 1 },
+              viewport: { once: true },
+            })}
         className="text-sm uppercase tracking-widest text-muted-foreground mb-10"
       >
         Projects
@@ -42,11 +48,15 @@ const ProjectsSection = () => {
         {projects.map((project, i) => (
           <motion.div
             key={i}
-            initial={{ opacity: 0, y: 8 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: i * 0.05, ease: [0.25, 0.1, 0.25, 1] }}
-            whileHover={{ y: -4 }}
+            {...(reduceMotion
+              ? { whileHover: undefined }
+              : {
+                  initial: { opacity: 0, y: 8 },
+                  whileInView: { opacity: 1, y: 0 },
+                  viewport: { once: true },
+                  transition: { duration: 0.4, delay: i * 0.05, ease: [0.25, 0.1, 0.25, 1] },
+                  whileHover: { y: -4 },
+                })}
             className="rounded-2xl bg-card p-6 transition-shadow duration-150"
             style={{ boxShadow: 'var(--shadow-card)' }}
             onMouseEnter={(e) => (e.currentTarget.style.boxShadow = 'var(--shadow-card-hover)')}

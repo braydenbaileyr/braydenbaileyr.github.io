@@ -1,21 +1,58 @@
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Mail, Linkedin, Github } from "lucide-react";
+import { useEffect, useState } from "react";
 
 const HeroSection = () => {
+  const reduceMotion = useReducedMotion();
+  const fullName = "Brayden Bailey";
+  const [displayedName, setDisplayedName] = useState("");
+  const [typingDone, setTypingDone] = useState(false);
+
+  useEffect(() => {
+    if (reduceMotion) {
+      setDisplayedName(fullName);
+      setTypingDone(true);
+      return;
+    }
+
+    let index = 0;
+    setTypingDone(false);
+    const interval = window.setInterval(() => {
+      index += 1;
+      setDisplayedName(fullName.slice(0, index));
+
+      if (index >= fullName.length) {
+        window.clearInterval(interval);
+        setTypingDone(true);
+      }
+    }, 90);
+
+    return () => {
+      window.clearInterval(interval);
+    };
+  }, [reduceMotion]);
+
   return (
-    <section className="pt-24 pb-16 max-w-[65ch] mx-auto px-6">
+    <section id="hero" className="py-16 max-w-3xl mx-auto px-6">
       <motion.div
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+        {...(reduceMotion
+          ? {}
+          : {
+              initial: { opacity: 0, y: 8 },
+              animate: { opacity: 1, y: 0 },
+              transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] },
+            })}
       >
-        <h1 className="text-5xl font-medium tracking-tighter text-foreground">
-          Brayden Bailey
+        <h1 className="text-5xl font-medium tracking-tighter text-foreground leading-tight">
+          {displayedName}
+          {!typingDone && (
+            <span className="inline-block w-[2px] h-[1em] ml-1 animate-pulse bg-foreground align-middle" />
+          )}
         </h1>
         <p className="mt-2 text-lg text-muted-foreground">
           Computer Engineering · Texas A&M University '26
         </p>
-        <p className="mt-6 text-[15px] leading-relaxed text-foreground/80 max-w-[55ch]">
+        <p className="mt-6 text-[15px] leading-relaxed text-foreground/80">
           Building full-stack systems for enterprise clients and real-time embedded platforms. 
           Focused on scalable APIs, telemetry systems, and tools that ship.
         </p>
