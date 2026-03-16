@@ -1,3 +1,3 @@
-# Welcome to your Lovable project
+# Brayden Bailey Portfolio
 
-TODO: Document your project here
+A portfolio website built with React, TypeScript, and Vite.
